@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['locale'])->group(function () {
+  Route::group(['prefix' => 'v1/{locale}'], function () {
+    Route::post('login', '\App\Http\Controllers\Api\V1\Auth\AuthController@login');
+    Route::post('signup', '\App\Http\Controllers\Api\V1\Auth\AuthController@signup');
+  });
 });
